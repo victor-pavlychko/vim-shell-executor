@@ -51,8 +51,9 @@ def get_correct_buffer(buffer_type):
         return get_visual_selection()
 
 def execute():
-    buf_type = get_correct_buffer(vim.eval("a:selection_or_buffer"))
-    shell_program_output = get_program_output_from_buffer_contents(buf_type)
+    first_line = vim.current.buffer[0]
+    buffer_contents = get_correct_buffer(vim.eval("a:selection_or_buffer"))
+    shell_program_output = get_program_output_from_buffer_contents(first_line, buffer_contents)
     create_new_buffer(shell_program_output)
 
 execute()
