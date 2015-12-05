@@ -12,12 +12,16 @@ function! vim_shell_executor#ExecuteWithShellProgram(selection_or_buffer)
 python << endPython
 from vim_shell_executor import *
 
+def get_option_or_default(key, val):
+    if int(vim.eval('exists("{}")'.format(key))):
+        return vim.eval(key)
+    return val
+
 def create_new_buffer(contents):
     delete_old_output_if_exists()
-    if int(vim.eval('exists("g:executor_output_win_height")')):
-        vim.command('aboveleft {}split executor_output'.format(vim.eval("g:executor_output_win_height")))
-    else:
-        vim.command('aboveleft split executor_output')
+    win_position = get_option_or_default('g:executor_output_win_position', 'aboveleft')
+    win_height = get_option_or_default('g:executor_output_win_height', '')
+    vim.command('{} {}split executor_output'.format(win_position, win_height))
     vim.command('normal! ggdG')
     vim.command('setlocal filetype=text')
     vim.command('setlocal buftype=nowrite')
