@@ -15,8 +15,8 @@ def get_command_and_input(first_line, buffer_contents):
 
 
 def get_program_output_from_buffer_contents(first_line, buffer_contents):
-    (command, input) = get_command_and_input(first_line, buffer_contents)
-    write_buffer_contents_to_file(INPUT_FILE, input)
+    (command, command_input) = get_command_and_input(first_line, buffer_contents)
+    write_buffer_contents_to_file(INPUT_FILE, command_input)
     execute_file_with_specified_shell_program(command)
     errors = read_file_lines(ERROR_LOG)
     std_out = read_file_lines(RESULTS_FILE)
